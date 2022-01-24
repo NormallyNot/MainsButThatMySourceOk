@@ -3,7 +3,7 @@
 
 -- // Made By JustAimlock
 
---// if u copy fuck your nigger ass
+
 
 if getgenv().ValiantAimHacks then return getgenv().ValiantAimHacks end
 
