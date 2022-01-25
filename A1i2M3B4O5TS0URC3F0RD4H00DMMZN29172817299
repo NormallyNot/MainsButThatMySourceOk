@@ -2,13 +2,16 @@
 getgenv().AimPart = "HumanoidRootPart" -- For R15 Games: {UpperTorso, LowerTorso, HumanoidRootPart, Head} | For R6 Games: {Head, Torso, HumanoidRootPart}
 getgenv().AimlockToggleKey = "Y" -- Toggles Aimbot On/Off 
 getgenv().AimRadius = 50 -- How far away from someones character you want to lock on at
-getgenv().ThirdPerson = false -- Locking onto someone in your Third Person POV
+getgenv().ThirdPerson = true -- Locking onto someone in your Third Person POV
 getgenv().FirstPerson = true -- Locking onto someone in your First Person POV
 getgenv().TeamCheck = false -- Check if Target is on your Team (True means it wont lock onto your teamates, false is vice versa) (Set it to false if there are no teams)
 getgenv().PredictMovement = true -- Predicts if they are moving in fast velocity (like jumping) so the aimbot will go a bit faster to match their speed 
 getgenv().PredictionVelocity = 10 -- The speed of the PredictMovement feature 
 ]]--
-
+getgenv().AimlockKey = 'q';
+_G.PART = "UpperTorso"
+_G.PART2 = "UpperTorso"
+_G.AIR = 0.000005
 getgenv().CiazwareUniversalAimbotLoadingTime = tick()
 
 local Players, Uis, RService, SGui = game:GetService"Players", game:GetService"UserInputService", game:GetService"RunService", game:GetService"StarterGui";
@@ -91,111 +94,93 @@ getgenv().GetNearestTarget = function()
     return nil
 end
 
---[[getgenv().CheckTeamsChildren = function()
-    if workspace and workspace:FindFirstChild"Teams" then 
-        if getgenv().TeamCheck == true then
-            if #workspace.Teams:GetChildren() == 0 then 
-                getgenv().TeamCheck = false 
-                SeparateNotify("Ciazware", "TeamCheck set to: "..tostring(getgenv().TeamCheck).." because there are no teams!", "", 3)
-            end
-        end
-    end
-end
-CheckTeamsChildren()
-]]--
+--// Sildim
 
---[[getgenv().GetNearestTarget = function()
-    local T;
-    for _, p in next, Players:GetPlayers() do 
-        if p ~= Client then 
-            if p.Character and p.Character:FindFirstChild(getgenv().AimPart) then 
-                if getgenv().TeamCheck == true and p.Team ~= Client.Team then 
-                    local Pos, ScreenCheck = WorldToScreenPoint(p.Character[getgenv().AimPart].Position)
-                    Pos = Vec2(Pos.X, Pos.Y)
-                    local MPos = Vec2(Mouse.X, Mouse.Y) -- Credits to CriShoux for this
-                    local Distance = (Pos - MPos).Magnitude;
-                    if Distance < getgenv().AimRadius then 
-                        T = p 
-                    end
-                elseif getgenv().TeamCheck == false and p.Team == Client.Team then 
-                    local Pos, ScreenCheck = WorldToScreenPoint(p.Character[getgenv().AimPart].Position)
-                    Pos = Vec2(Pos.X, Pos.Y)
-                    local MPos = Vec2(Mouse.X, Mouse.Y) -- Credits to CriShoux for this
-                    local Distance = (Pos - MPos).Magnitude;
-                    if Distance < getgenv().AimRadius then 
-                        T = p 
+        Mouse.KeyDown:Connect(function(a)
+            if not (Uis:GetFocusedTextBox()) then 
+                if a == AimlockKey and AimlockTarget == nil then
+                    pcall(function()
+                        if MousePressed ~= true then MousePressed = true end 
+                        local Target;Target = GetNearestTarget()
+                        if Target ~= nil then 
+                            AimlockTarget = Target
+                        end
+                    end)
+                elseif a == AimlockKey and AimlockTarget ~= nil then
+                    if AimlockTarget ~= nil then AimlockTarget = nil end
+                    if MousePressed ~= false then 
+                        MousePressed = false 
                     end
                 end
             end
-        end
-    end
-    if T then 
-        return T
-    end
-end]]--
-
-Uis.InputBegan:Connect(function(Key)
-    if not (Uis:GetFocusedTextBox()) then 
-        if Key.UserInputType == Enum.UserInputType.MouseButton2 then 
-            pcall(function()
-                if MousePressed ~= true then MousePressed = true end 
-                local Target;Target = GetNearestTarget()
-                if Target ~= nil then 
-                    AimlockTarget = Target
-                    
-                end
-            end)
-        end
-        if Key.KeyCode == Enum.KeyCode[AimlockToggleKey] then 
-            Aimlock = not Aimlock
-            
-        end
-    end
-end)
-Uis.InputEnded:Connect(function(Key)
-    if not (Uis:GetFocusedTextBox()) then 
-        if Key.UserInputType == Enum.UserInputType.MouseButton2 then 
-            if AimlockTarget ~= nil then AimlockTarget = nil end
-            if MousePressed ~= false then 
-                MousePressed = false 
+        end)
+        RService.RenderStepped:Connect(function()
+        
+        
+        
+        
+            if Plr.Character.Humanoid.Jump == true and Plr.Character.Humanoid.FloorMaterial == Enum.Material.Air then --//   _G.PART2 / _G.PART = "RightFoot" bulmam lazım
+                _G.PART = "RightFoot"
+            else
+                Plr.Character:WaitForChild("Humanoid").StateChanged:Connect(function(old,new)
+                    if new == Enum.HumanoidStateType.Freefall then
+                    _G.PART = "RightFoot"
+                    else
+                        _G.PART = _G.PART2
+                    end
+                end)
             end
-        end
-    end
-end)
-
-RService.RenderStepped:Connect(function()
-    if getgenv().FirstPerson == true and getgenv().ThirdPerson == false then 
-        if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude <= 1 then 
-            CanNotify = true 
-        else 
-            CanNotify = false 
-        end
-    elseif getgenv().ThirdPerson == true and getgenv().FirstPerson == false then 
-        if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude > 1 then 
-            CanNotify = true 
-        else 
-            CanNotify = false 
-        end
-    end
-    if Aimlock == true and MousePressed == true then 
-        if AimlockTarget and AimlockTarget.Character and AimlockTarget.Character:FindFirstChild(getgenv().AimPart) then 
-            if getgenv().FirstPerson == true then
-                if CanNotify == true then
-                    if getgenv().PredictMovement == true then 
-                        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
-                    elseif getgenv().PredictMovement == false then 
-                        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
+		end
+        
+        
+    
+			local AimPartOld = getgenv().OldAimPart
+            if getgenv().ThirdPerson == true and getgenv().FirstPerson == true then 
+                if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude > 1 or (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude <= 1 then 
+                    CanNotify = true 
+                else 
+                    CanNotify = false 
+                end
+            elseif getgenv().ThirdPerson == true and getgenv().FirstPerson == false then 
+                if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude > 1 then 
+                    CanNotify = true 
+                else 
+                    CanNotify = false 
+                end
+            elseif getgenv().ThirdPerson == false and getgenv().FirstPerson == true then 
+                if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude <= 1 then 
+                    CanNotify = true 
+                else 
+                    CanNotify = false 
+                end
+            end
+            if getgenv().Aimlock == true and MousePressed == true then 
+                if AimlockTarget and AimlockTarget.Character and AimlockTarget.Character:FindFirstChild(getgenv().AimPart) then 
+                    if getgenv().FirstPerson == true then
+                        if CanNotify == true then
+                            if getgenv().PredictMovement == true then 
+                                Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
+                            elseif getgenv().PredictMovement == false then 
+                                Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
+                            end
+                        end
+                    elseif getgenv().ThirdPerson == true then 
+                        if CanNotify == true then
+                            if getgenv().PredictMovement == true then 
+                                Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
+                            elseif getgenv().PredictMovement == false then 
+                                Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
+                            end
+                        end 
                     end
                 end
-            elseif getgenv().ThirdPerson == true then 
-                if CanNotify == true then
-                    if getgenv().PredictMovement == true then 
-                        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
-                    elseif getgenv().PredictMovement == false then 
-                        Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
-                    end
-                end 
             end
-        end
-    end
-end)
+            if getgenv().CheckIfJumped == true then
+                if AimlockTarget.Character.Humanoid.FloorMaterial == Enum.Material.Air and AimlockTarget.Character.Humanoid.Jump == true then
+                    getgenv().AimPart = "RightLowerLeg"
+                else
+                    getgenv().AimPart = AimPartOld
+                end
+            end
+
+        end)
