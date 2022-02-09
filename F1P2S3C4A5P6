@@ -1,0 +1,39 @@
+
+-- Watermarker FPS CAP
+
+-- init
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+-- services
+local input = game:GetService("UserInputService")
+local run = game:GetService("RunService")
+local tween = game:GetService("TweenService")
+local tweeninfo = TweenInfo.new
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Siblingz
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Frame.BorderColor3 = Color3.fromRGB(58, 58, 58)
+Frame.BorderSizePixel = 3
+Frame.Position = UDim2.new(0.00606058538, 0, 0.0126382485, 0)
+Frame.Size = UDim2.new(0, 272, 0, 24)
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+TextLabel.BorderColor3 = Color3.fromRGB(53, 53, 53)
+TextLabel.BorderSizePixel = 2
+TextLabel.Size = UDim2.new(0, 272, 0, 24)
+TextLabel.Font = Enum.Font.Nunito
+TextLabel.Text = "Tasak-Gui     |    ? FPS    |      Da Hood"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 22.000
