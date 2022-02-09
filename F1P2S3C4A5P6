@@ -19,7 +19,6 @@ local TextLabel = Instance.new("TextLabel")
 --Properties:
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Siblingz
 
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
