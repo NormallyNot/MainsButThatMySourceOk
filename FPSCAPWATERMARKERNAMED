@@ -1,0 +1,65 @@
+--FPS - Watermark
+
+local FPS = Instance.new("ScreenGui")
+local FPSwatermark = Instance.new("Frame")
+local _0FPS = Instance.new("TextLabel")
+local TasakGuiPrivDaHood = Instance.new("TextLabel")
+
+FPS.Name = "FPS"
+FPS.Parent = game.CoreGui
+FPS.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+FPSwatermark.Name = "FPS  | watermark"
+FPSwatermark.Parent = FPS
+FPSwatermark.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FPSwatermark.BorderColor3 = Color3.fromRGB(255, 0, 0)
+FPSwatermark.BorderSizePixel = 2
+FPSwatermark.Position = UDim2.new(0.017575793, 0, 0.034755148, 0)
+FPSwatermark.Size = UDim2.new(0, 287, 0, 24)
+
+_0FPS.Name = "0 FPS"
+_0FPS.Parent = FPSwatermark
+_0FPS.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+_0FPS.BackgroundTransparency = 1.000
+_0FPS.BorderColor3 = Color3.fromRGB(0, 0, 0)
+_0FPS.Position = UDim2.new(0.322, 0, -0.550469637, 0)
+_0FPS.Size = UDim2.new(0, 126, 0, 50)
+_0FPS.Font = Enum.Font.Code
+_0FPS.Text = "0 FPS"
+_0FPS.TextColor3 = Color3.fromRGB(255, 255, 255)
+_0FPS.TextSize = 16.000
+
+TasakGuiPrivDaHood.Name = "JustAimlock |           |  Da Hood"
+TasakGuiPrivDaHood.Parent = FPSwatermark
+TasakGuiPrivDaHood.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TasakGuiPrivDaHood.BackgroundTransparency = 1.000
+TasakGuiPrivDaHood.Position = UDim2.new(0.275343984, 0, -0.129615277, 0)
+TasakGuiPrivDaHood.Size = UDim2.new(0, 127, 0, 29)
+TasakGuiPrivDaHood.Font = Enum.Font.Code
+TasakGuiPrivDaHood.Text = "JustAimlock |          |  Da Hood"
+TasakGuiPrivDaHood.TextColor3 = Color3.fromRGB(255, 255, 255)
+TasakGuiPrivDaHood.TextSize = 16.000
+
+
+
+local function YSFI_fake_script() -- _0FPS.LocalScript 
+	local script = Instance.new('LocalScript', _0FPS)
+
+	
+	-- Made By JastAmLock
+	
+	local RS = game:GetService("RunService")
+	
+	local frames = 0
+	
+	RS.RenderStepped:Connect(function()
+		frames = frames + 1
+	end)
+	
+	
+	while wait (1) do
+		script.Parent.Text = frames .." FPS"-- Tasak-Gui-Priv |  Label  | Da Hood
+		frames = 0
+	end
+end
+coroutine.wrap(YSFI_fake_script)()
