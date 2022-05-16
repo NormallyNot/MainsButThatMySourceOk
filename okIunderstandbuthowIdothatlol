@@ -1,52 +1,52 @@
---[[
-    local mainMenu = ShouxLib:new([string] title, [color3] backgroundColor, [color3] textColor)
-        This function returns a table with other methods. 
-            title is the title of the category
-            backgroundColor is the background color of the category when you click the category menu
-            textColor is the text color of the category when you click the category menu
+
+    local mainMenu = ShouxLib:new([string] mom, [color3] backgroundColor, [color3] textColor)
+--        This function returns a table with other methods. 
+  --          title is the title of the category
+    --        backgroundColor is the background color of the category when you click the category menu
+       --     textColor is the text color of the category when you click the category menu
 
     mainMenu:newBtn([string] title, [function] callback, [boolean] noToggle)
-        This function creates a button that will call the function you give it in the second argument. If noToggle is nil then your button will be a toggle. If noToggle is true then your button will not be a toggle.
-            title is the title of the button
-            callback is the callback function of the button
-            (optional) noToggle is if the button will be togglable or not
+      --  This function creates a button that will call the function you give it in the second argument. If noToggle is nil then your button will be a toggle. If noToggle is true then your button will not be a toggle.
+       --     title is the title of the button
+          --  callback is the callback function of the button
+           -- (optional) noToggle is if the button will be togglable or not
     
     mainMenu:newTextbox([string] title, [function] callback, [string] presetText)
-        This function creates a button with a text box that the user will be able to type in. When the user loses focus of the textbox, it will call the function you give it in the second argument.
-            title is the title of the button
-            callback is the callback function of the text box
-            (optional) presetText is the text that will already fill in the text box
+       -- This function creates a button with a text box that the user will be able to type in. When the user loses focus of the textbox, it will call the function you give it in the second argument.
+        --    title is the title of the button
+          --  callback is the callback function of the text box
+           -- (optional) presetText is the text that will already fill in the text box
 
     mainMenu:newSlider([string] title, [function] callback, [number] min, [number] max, [number] startPoint)
-        This function creates a slider that will call the function you give it in the second argument when the slider is slid.
-            title is the title of the slider
-            min is the minimum number the slider can move to
-            max is the maximum number the slider can move to
-            (optional) startPoint is the starting point of where the slider is. This number goes from 0 to max. Keep in mind thatit uses mapping formula and it's not precise. If startPoint is nil then it will use 0.
+       -- This function creates a slider that will call the function you give it in the second argument when the slider is slid.
+         --   title is the title of the slider
+          --  min is the minimum number the slider can move to
+           -- max is the maximum number the slider can move to
+           -- (optional) startPoint is the starting point of where the slider is. This number goes from 0 to max. Keep in mind thatit uses mapping formula and it's not precise. If startPoint is nil then it will use 0.
     
     mainMenu:newBind([string] title, [function] callback, [keycode] presetKeyCode)
-        This function creates a keybind button that will call the function you give it in the second argument when the chosen key is pressed.
-            title is the title of the button
-            callback is the callback function of the button
-            (optional) presetKeyCode is the preset key of the keybind
+      --  This function creates a keybind button that will call the function you give it in the second argument when the chosen key is pressed.
+--title is the title of the button
+--callback is the callback function of the button
+          --  (optional) presetKeyCode is the preset key of the keybind
 
     mainMenu:newDropdown([string] title, [function] callback, [table] list)
-        This function creates a dropdown that will call the function you give it in the second argument when an item from the list is chosen.
-            title is the title of the button
-            callback is the callback function of the dropdown
-            list is the items in the dropdown
+       -- This function creates a dropdown that will call the function you give it in the second argument when an item from the list is chosen.
+         --   title is the title of the button
+         --   callback is the callback function of the dropdown
+          --  list is the items in the dropdown
 
     mainMenu:newColorPicker([string] title, [function] callback, [color3] presetColor)
-        This function creates a color picker button that will call the function you give it in the second argument when a new color is chosen.
-            title is the title of the button
-            callback is the callback function of the color picker
-            (optional) presetColor is the preset color of the color picker
+       -- This function creates a color picker button that will call the function you give it in the second argument when a new color is chosen.
+         --   title is the title of the button
+           -- callback is the callback function of the color picker
+           -- (optional) presetColor is the preset color of the color picker
 
     functon ShouxLib:SetCategory([table] category)
-        This function will set the current viewing category to "[table] category"
+        --This function will set the current viewing category to "[table] category"
         
         
-    This is a gui using every function:
+   -- This is a gui using every function:
 
         local ShouxLib = loadstring(game:HttpGetAsync("https://pastebin.com/raw/aWJeXMN3"))()
         local main = ShouxLib:new("test", Color3.fromRGB(25, 25, 25), Color3.fromRGB(192, 0, 199));
@@ -73,7 +73,6 @@
         main2:newBind("hide gui", function() game:GetService("CoreGui").ShouxLibGui.Enabled = not game:GetService("CoreGui").ShouxLibGui.Enabled; end, Enum.KeyCode.P);
 
         ShouxLib:SetCategory(main);
-]]
 
 local dragging = false;
 local draggableStart;
