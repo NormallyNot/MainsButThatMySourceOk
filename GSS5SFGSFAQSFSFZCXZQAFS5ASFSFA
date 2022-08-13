@@ -36,15 +36,26 @@ local tableinsert = table.insert
 -- // Silent Aim Vars
 getgenv().Aiming = {
     Enabled = true,
+--[[
+FOV =
+12.22
+9.30
+9
+8.30
+8.50
+10.22
+10.50
+7.5
+--]]
 
     ShowFOV = false,
-    FOV = 12.22,
+    FOV = 8.40,
     FOVSides = 300,
     FOVColour = Color3fromRGB(98, 37, 209),
 
     VisibleCheck = true,
     
-    HitChance = 100,
+    HitChance = 150,
 
     Selected = nil,
     SelectedPart = nil,
@@ -98,10 +109,10 @@ local CalcChance = function(percentage)
     percentage = mathfloor(percentage)
 
     -- // Get the chance
-    local chance = mathfloor(Randomnew().NextNumber(Randomnew(), 0, 1) * 100) / 100
+    local chance = mathfloor(Randomnew().NextNumber(Randomnew(), 0, 1) * 150) / 150
 
     -- // Return
-    return chance <= percentage / 100
+    return chance <= percentage / 150
 end
 
 -- // Customisable Checking Functions: Is a part visible
